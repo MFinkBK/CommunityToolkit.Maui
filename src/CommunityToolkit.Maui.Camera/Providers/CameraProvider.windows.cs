@@ -20,10 +20,14 @@ partial class CameraProvider
 		foreach (var sourceGroup in videoCaptureSourceGroup)
 		{
 			using var mediaCapture = new MediaCapture();
-			bool success = await mediaCapture.InitializeCameraForCameraView(sourceGroup.Id, token);
 
-			if (!success)
+			try
 			{
+				await mediaCapture.InitializeCameraForCameraView(sourceGroup.Id, token);
+			}
+			catch (Exception)
+			{
+				// can't use that camera
 				continue;
 			}
 

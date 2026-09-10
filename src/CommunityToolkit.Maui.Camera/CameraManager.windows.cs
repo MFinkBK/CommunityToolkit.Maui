@@ -141,9 +141,13 @@ partial class CameraManager
 
 		mediaCapture = new MediaCapture();
 
-		bool success = await mediaCapture.InitializeCameraForCameraView(cameraView.SelectedCamera.DeviceId, token);
-		if (!success)
+		try
 		{
+			await mediaCapture.InitializeCameraForCameraView(cameraView.SelectedCamera.DeviceId, token);
+		}
+		catch (Exception)
+		{
+			// can't use that camera
 			return;
 		}
 
